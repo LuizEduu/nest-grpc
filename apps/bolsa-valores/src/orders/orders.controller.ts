@@ -1,5 +1,5 @@
 import { Controller, Param } from '@nestjs/common';
-import { MessagePattern, Payload } from '@nestjs/microservices';
+import { GrpcMethod, MessagePattern, Payload } from '@nestjs/microservices';
 import { OrdersService } from './orders.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 
@@ -7,8 +7,8 @@ import { CreateOrderDto } from './dto/create-order.dto';
 export class OrdersController {
   constructor(private readonly ordersService: OrdersService) {}
 
-  @MessagePattern('createOrder')
-  create(@Payload() createOrderDto: CreateOrderDto) {
+  @GrpcMethod('OrderService')
+  createOrder(@Payload() createOrderDto: CreateOrderDto) {
     return this.ordersService.create(createOrderDto);
   }
 
